@@ -8,8 +8,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseTimeEntity {
@@ -26,9 +28,9 @@ public class Board extends BaseTimeEntity {
 
 	private String password;
 
-	private final String deleteYn = "N";
+	private String deleteYn = "N";
 
-	private final Long viewCount = 0L;
+	private Long viewCount = 0L;
 
 	@Builder
 	public Board(String title, String author, String password, String content) {
@@ -37,7 +39,4 @@ public class Board extends BaseTimeEntity {
 		this.password = password;
 		this.content = content;
 	}
-
-
-
 }
