@@ -27,30 +27,30 @@ public class BoardController {
     // 글 전체 조회
     @GetMapping
     public ResponseEntity<List<BoardResponse>> getAllBoards() {
-        List<BoardResponse> response = boardService.getAllBoards();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        List<BoardResponse> boardResponse = boardService.getAllBoards();
+        return new ResponseEntity<>(boardResponse, HttpStatus.OK);
     }
 
     // 글 생성
     @PostMapping
-    public ResponseEntity<BoardResponse> createBoard(@RequestBody BoardRequest request) {
-        BoardResponse response = boardService.createBoard(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    public ResponseEntity<BoardResponse> createBoard(@RequestBody BoardRequest boardRequest) {
+        BoardResponse boardResponse = boardService.createBoard(boardRequest);
+        return new ResponseEntity<>(boardResponse, HttpStatus.CREATED);
     }
 
     // 글 단건 조회
     @GetMapping("/{id}")
     public ResponseEntity<BoardResponse> getBoard(@PathVariable Long id) {
-        BoardResponse response = boardService.getBoard(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        BoardResponse boardResponse = boardService.getBoard(id);
+        return new ResponseEntity<>(boardResponse, HttpStatus.OK);
     }
 
     // 글 수정
     @PutMapping("/{id}")
-    public ResponseEntity<BoardResponse> updateBoard(@PathVariable Long id, @RequestBody BoardRequest request) {
+    public ResponseEntity<BoardResponse> updateBoard(@PathVariable Long id, @RequestBody BoardRequest boardRequest) {
         try {
-            BoardResponse response = boardService.updateBoard(id, request);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            BoardResponse boardResponse = boardService.updateBoard(id, boardRequest);
+            return new ResponseEntity<>(boardResponse, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -58,8 +58,8 @@ public class BoardController {
 
     // 글 삭제 (deleteYn을 "Y"로 변경)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id);
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long id, @PathVariable String password) {
+        boardService.deleteBoard(id, password);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
