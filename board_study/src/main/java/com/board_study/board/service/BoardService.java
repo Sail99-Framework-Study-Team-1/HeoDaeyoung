@@ -4,6 +4,7 @@ import com.board_study.board.entity.Board;
 import com.board_study.board.model.BoardRequest;
 import com.board_study.board.model.BoardResponse;
 import com.board_study.board.repository.BoardRepository;
+import com.board_study.grobal.exception.PasswordValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +71,7 @@ public class BoardService {
     // 비밀번호 검증
     private void validateBoard(Board board, String password) {
         if (!board.getPassword().equals(password)) {
-            throw new RuntimeException("비밀번호가 틀립니다.");
+            throw new PasswordValidationException("비밀번호가 틀립니다.");
         }
     }
 }

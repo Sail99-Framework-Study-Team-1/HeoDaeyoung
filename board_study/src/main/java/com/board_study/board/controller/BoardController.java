@@ -48,18 +48,14 @@ public class BoardController {
     // 글 수정
     @PutMapping("/{id}")
     public ResponseEntity<BoardResponse> updateBoard(@PathVariable Long id, @RequestBody BoardRequest boardRequest) {
-        try {
-            BoardResponse boardResponse = boardService.updateBoard(id, boardRequest);
-            return new ResponseEntity<>(boardResponse, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        BoardResponse boardResponse = boardService.updateBoard(id, boardRequest);
+        return new ResponseEntity<>(boardResponse, HttpStatus.OK);
     }
 
     // 글 삭제 (deleteYn을 "Y"로 변경)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long id, @PathVariable String password) {
-        boardService.deleteBoard(id, password);
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long id, @RequestBody BoardRequest boardRequest) {
+        boardService.deleteBoard(id, boardRequest.password());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
