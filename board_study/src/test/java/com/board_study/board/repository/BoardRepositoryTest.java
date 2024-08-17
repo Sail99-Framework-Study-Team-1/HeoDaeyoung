@@ -3,6 +3,7 @@ package com.board_study.board.repository;
 import com.board_study.board.entity.Board;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -130,6 +131,25 @@ public class BoardRepositoryTest {
 		Board findBoardByContent = boardRepository.findFirstByContentContaining("22");
 		assertThat(findBoardByContent).isNotNull();
 		assertThat(findBoardByContent.getContent()).contains("22");
+	}
+
+	@Test
+	void dirtyCheckingUpdate() {
+
+		final Board board1 = Board.builder()
+						.author("Saru")
+						.password("111")
+						.title("TEST 1111")
+						.content("TEST 2222")
+						.build();
+
+		// when
+		boardRepository.save(board1);
+
+		Board selectedBoard = boardRepository.findById(1L).orElseThrow();
+		assertThat(selectedBoard.getDeleteYn()).isEqualTo("N");
+		selectedBoard.updateDelete();
+		assertThat(selectedBoard.getDeleteYn()).isEqualTo("Y");
 	}
 
 }
